@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌸 國外旅遊戰利品記帳本 | Pastel Travel Loot Tracker</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Zen Maru Gothic & Nunito for adorable rounded typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            kawaii: ['"Zen Maru Gothic"', '"Nunito"', 'sans-serif'],
+          },
+          colors: {
+            sakura: {
+              50: '#FFF5F7',
+              100: '#FFE2E8',
+              200: '#FFC6D4',
+              300: '#FFA0B8',
+              400: '#FF7599',
+              500: '#F44E77',
+              600: '#DE2F5B',
+            },
+            cream: '#FFFDF9',
+            lavender: {
+              100: '#F3E8FF',
+              200: '#E9D5FF',
+              400: '#C084FC',
+              500: '#A855F7',
+            },
+            mint: {
+              100: '#E6FFFA',
+              200: '#B2F5EA',
+              400: '#4FD1C5',
+              500: '#319795',
+            },
+            butter: {
+              100: '#FEFCBF',
+              200: '#FAF089',
+              400: '#ECC94B',
+            },
+            peach: {
+              100: '#FFEDD5',
+              200: '#FED7AA',
+              400: '#FB923C',
+            },
+            choc: '#5C4A47',
+          },
+          boxShadow: {
+            'soft': '0 8px 24px -4px rgba(255, 160, 184, 0.25), 0 4px 12px -2px rgba(255, 182, 193, 0.15)',
+            'polaroid': '0 10px 25px -5px rgba(92, 74, 71, 0.12), 0 8px 10px -6px rgba(92, 74, 71, 0.08)',
+            'bubble': '0 6px 0px 0px rgba(244, 78, 119, 0.3)',
+            'bubble-pressed': '0 2px 0px 0px rgba(244, 78, 119, 0.3)',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    body {
+      font-family: 'Zen Maru Gothic', 'Nunito', sans-serif;
+      background-color: #FFF9FA;
+      background-image: 
+        radial-gradient(#FFD6E0 1.2px, transparent 1.2px), 
+        radial-gradient(#FFE8D6 1.2px, #FFF9FA 1.2px);
+      background-size: 32px 32px;
+      background-position: 0 0, 16px 16px;
+      color: #5C4A47;
+    }
+    
+    /* Washi tape visual decoration */
+    .washi-tape {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-1.5deg);
+      width: 86px;
+      height: 24px;
+      background: rgba(255, 222, 173, 0.85);
+      border-left: 2px dashed rgba(220, 160, 120, 0.5);
+      border-right: 2px dashed rgba(220, 160, 120, 0.5);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      z-index: 10;
+    }
+    .washi-tape-pink {
+      background: rgba(255, 192, 203, 0.85);
+      border-color: rgba(230, 130, 150, 0.5);
+      transform: translateX(-50%) rotate(2deg);
+    }
+    .washi-tape-lavender {
+      background: rgba(221, 214, 254, 0.85);
+      border-color: rgba(180, 160, 230, 0.5);
+      transform: translateX(-50%) rotate(-2deg);
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FFF0F3;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #FFA0B8;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #FF7599;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-choc pb-16 selection:bg-sakura-200 selection:text-sakura-600">
+
+  <!-- 頂部可愛導航 -->
+  <header class="sticky top-0 z-30 bg-white/85 backdrop-blur-md border-b-2 border-sakura-100 shadow-sm transition-all duration-300">
+    <div class="max-w-6xl mx-auto px-4 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Logo 標題 -->
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-tr from-sakura-300 to-sakura-100 rounded-2xl flex items-center justify-center text-xl sm:text-2xl shadow-md border-2 border-white transform hover:rotate-6 transition-transform">
+          🛍️
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl sm:text-2xl font-black text-choc tracking-tight flex items-center gap-1.5">
+              戰利品手帳
+              <span class="text-xs bg-sakura-100 text-sakura-500 font-bold px-2 py-0.5 rounded-full border border-sakura-200">
+                ✈️ 國外記帳
+              </span>
+            </h1>
+          </div>
+          <p class="text-xs text-choc/60 font-medium hidden sm:block">紀錄旅行中的心動時刻與購物小確幸 ✨</p>
+        </div>
+      </div>
+
+      <!-- 右側動作按鈕區 -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button id="btn-export-options" class="px-3.5 py-2 bg-cream hover:bg-sakura-50 text-choc text-xs sm:text-sm font-bold rounded-2xl border-2 border-sakura-100 shadow-sm hover:border-sakura-200 transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-cloud-arrow-down text-sakura-400"></i>
+          <span>備份/匯出</span>
+        </button>
+
+        <button id="btn-open-add-modal" class="px-4 py-2 sm:px-5 sm:py-2.5 bg-gradient-to-r from-sakura-400 to-sakura-500 hover:from-sakura-500 hover:to-sakura-600 text-white text-xs sm:text-sm font-bold rounded-2xl shadow-bubble active:shadow-bubble-pressed active:translate-y-1 transition-all flex items-center gap-2">
+          <i class="fa-solid fa-plus-circle text-base"></i>
+          <span>新增戰利品</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 主要內容區 -->
+  <main class="max-w-6xl mx-auto px-4 pt-6 space-y-6">
+
+    <!-- 匯率即時設定列 -->
+    <section class="bg-white/95 rounded-3xl p-4 sm:p-5 shadow-soft border-2 border-sakura-100 relative overflow-hidden">
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        
+        <!-- 當前幣別選擇 -->
+        <div class="w-full lg:w-auto">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-sm font-bold flex items-center gap-1.5 text-choc">
+              <i class="fa-solid fa-coins text-butter-400"></i>
+              常用外幣快捷切換
+            </span>
+            <span class="text-xs text-choc/50">(自動轉換為台幣 TWD)</span>
+          </div>
+
+          <div class="flex flex-wrap gap-2" id="currency-pills-container">
+            <!-- 幣別藥丸按鈕由 JS 動態生成 -->
+          </div>
+        </div>
+
+        <!-- 匯率自訂與試算小框 -->
+        <div class="w-full lg:w-auto bg-sakura-50/70 p-3 rounded-2xl border border-sakura-200 flex flex-wrap items-center justify-between sm:justify-end gap-3 text-xs sm:text-sm">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-choc/80">目前匯率：</span>
+            <div class="flex items-center bg-white px-2.5 py-1 rounded-xl border border-sakura-200 shadow-inner">
+              <span class="font-bold text-sakura-500 mr-1" id="rate-symbol-preview">1 JPY =</span>
+              <input type="number" id="input-current-rate" step="0.0001" min="0.0001" class="w-20 font-bold text-choc bg-transparent outline-none text-right" value="0.2100">
+              <span class="text-xs font-bold text-choc/60 ml-1">TWD</span>
+            </div>
+          </div>
+          <button id="btn-save-rate" class="px-3 py-1 bg-sakura-400 hover:bg-sakura-500 text-white rounded-xl font-bold shadow-sm transition-all text-xs">
+            更新匯率 🔄
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 總覽統計卡片組 -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+      
+      <!-- 總消費台幣 -->
+      <div class="bg-gradient-to-br from-white to-sakura-50/60 rounded-3xl p-4 sm:p-5 border-2 border-sakura-100 shadow-soft relative group hover:-translate-y-1 transition-all duration-300">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-sakura-100 text-sakura-500 flex items-center justify-center text-lg mb-2">
+          💸
+        </div>
+        <p class="text-xs font-bold text-choc/60 mb-0.5">累積消費折合</p>
+        <div class="flex items-baseline gap-1">
+          <span class="text-xs sm:text-sm font-black text-sakura-500">NT$</span>
+          <span class="text-xl sm:text-2xl font-black text-choc tracking-tight" id="stat-total-twd">0</span>
+        </div>
+      </div>
+
+      <!-- 外幣原價合計 -->
+      <div class="bg-gradient-to-br from-white to-peach-50/60 rounded-3xl p-4 sm:p-5 border-2 border-peach-100 shadow-soft relative group hover:-translate-y-1 transition-all duration-300">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-peach-100 text-peach-500 flex items-center justify-center text-lg mb-2">
+          🌏
+        </div>
+        <p class="text-xs font-bold text-choc/60 mb-0.5">當前幣別總花費</p>
+        <div class="flex items-baseline gap-1">
+          <span class="text-xs sm:text-sm font-black text-peach-500" id="stat-currency-label">JPY</span>
+          <span class="text-xl sm:text-2xl font-black text-choc tracking-tight" id="stat-total-foreign">0</span>
+        </div>
+      </div>
+
+      <!-- 戰利品總件數 -->
+      <div class="bg-gradient-to-br from-white to-lavender-50/60 rounded-3xl p-4 sm:p-5 border-2 border-lavender-200 shadow-soft relative group hover:-translate-y-1 transition-all duration-300">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-lavender-100 text-lavender-500 flex items-center justify-center text-lg mb-2">
+          🎁
+        </div>
+        <p class="text-xs font-bold text-choc/60 mb-0.5">已收穫商品件數</p>
+        <div class="flex items-baseline gap-1">
+          <span class="text-xl sm:text-2xl font-black text-choc tracking-tight" id="stat-total-items">0</span>
+          <span class="text-xs font-bold text-choc/60">件寶物</span>
+        </div>
+      </div>
+
+      <!-- 最高單價戰利品 -->
+      <div class="bg-gradient-to-br from-white to-butter-50/60 rounded-3xl p-4 sm:p-5 border-2 border-butter-200 shadow-soft relative group hover:-translate-y-1 transition-all duration-300">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-butter-100 text-butter-500 flex items-center justify-center text-lg mb-2">
+          👑
+        </div>
+        <p class="text-xs font-bold text-choc/60 mb-0.5">身價最高戰利品</p>
+        <div class="truncate">
+          <span class="text-xs sm:text-sm font-black text-choc block truncate" id="stat-max-name">尚無資料</span>
+          <span class="text-xs font-bold text-sakura-500" id="stat-max-price">NT$ 0</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 類別支出分配長條視覺化 -->
+    <section class="bg-white/95 rounded-3xl p-4 sm:p-5 shadow-soft border-2 border-sakura-100">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm font-bold text-choc flex items-center gap-2">
+          <i class="fa-solid fa-chart-pie text-sakura-400"></i>
+          分類支出比例
+        </h3>
+        <span class="text-xs text-choc/50" id="stat-category-summary">各類別金額分配</span>
+      </div>
+
+      <!-- 複合進度條 -->
+      <div class="w-full h-4 sm:h-5 bg-sakura-50 rounded-full overflow-hidden flex shadow-inner border border-sakura-100 mb-3" id="category-stacked-bar">
+        <!-- 長條區塊由 JS 動態填入 -->
+      </div>
+
+      <!-- 類別圖例與金額清單 -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 pt-1" id="category-legends">
+        <!-- 標籤由 JS 渲染 -->
+      </div>
+    </section>
+
+    <!-- 篩選、搜尋與檢視切換工具列 -->
+    <section class="bg-white/95 rounded-3xl p-4 shadow-soft border-2 border-sakura-100 space-y-3">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-3">
+        
+        <!-- 搜尋輸入框 -->
+        <div class="w-full md:w-72 relative">
+          <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-sakura-300">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span>
+          <input type="text" id="search-input" placeholder="搜尋商品名稱、地點、心得..." class="w-full pl-10 pr-4 py-2.5 bg-sakura-50/50 focus:bg-white text-sm rounded-2xl border border-sakura-200 focus:border-sakura-400 focus:ring-2 focus:ring-sakura-200 outline-none transition-all placeholder:text-choc/40">
+        </div>
+
+        <!-- 篩選條件群組 -->
+        <div class="w-full md:w-auto flex flex-wrap items-center gap-2">
+          <!-- 類別過濾 -->
+          <select id="filter-category" class="px-3 py-2 bg-cream text-xs sm:text-sm font-bold rounded-2xl border border-sakura-200 outline-none text-choc focus:ring-2 focus:ring-sakura-200">
+            <option value="ALL">🌸 所有分類</option>
+            <option value="beauty">💄 藥妝彩妝</option>
+            <option value="fashion">👗 服飾配件</option>
+            <option value="snacks">🍵 零食伴手禮</option>
+            <option value="anime">🧸 動漫周邊</option>
+            <option value="digital">📷 電器3C</option>
+            <option value="other">🎀 其他雜貨</option>
+          </select>
+
+          <!-- 幣別過濾 -->
+          <select id="filter-currency" class="px-3 py-2 bg-cream text-xs sm:text-sm font-bold rounded-2xl border border-sakura-200 outline-none text-choc focus:ring-2 focus:ring-sakura-200">
+            <option value="ALL">🌐 全部幣別</option>
+            <option value="JPY">JPY 日幣</option>
+            <option value="KRW">KRW 韓元</option>
+            <option value="USD">USD 美元</option>
+            <option value="EUR">EUR 歐元</option>
+            <option value="THB">THB 泰銖</option>
+            <option value="CUSTOM">自訂幣別</option>
+          </select>
+
+          <!-- 排序 -->
+          <select id="filter-sort" class="px-3 py-2 bg-cream text-xs sm:text-sm font-bold rounded-2xl border border-sakura-200 outline-none text-choc focus:ring-2 focus:ring-sakura-200">
+            <option value="date-desc">📅 日期：最新優先</option>
+            <option value="date-asc">📅 日期：最舊優先</option>
+            <option value="price-desc">💰 金額：高至低</option>
+            <option value="price-asc">🪙 金額：低至高</option>
+          </select>
+
+          <!-- 檢視模式切換 (拍立得卡片 vs 清單) -->
+          <div class="flex items-center bg-sakura-100 p-1 rounded-2xl border border-sakura-200 ml-auto md:ml-0">
+            <button id="view-mode-grid" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-sakura-600 shadow-sm" title="拍立得相片牆">
+              <i class="fa-solid fa-border-all"></i>
+            </button>
+            <button id="view-mode-list" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-choc/70 hover:text-choc" title="條列筆記清單">
+              <i class="fa-solid fa-list-ul"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 戰利品展示區 -->
+    <section>
+      
+      <!-- 拍立得照片卡片檢視 (Grid View) -->
+      <div id="items-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-3">
+        <!-- 卡片由 JS 動態生成 -->
+      </div>
+
+      <!-- 清單檢視 (List View) -->
+      <div id="items-list-container" class="hidden space-y-3 pt-3">
+        <!-- 清單項目由 JS 動態生成 -->
+      </div>
+
+      <!-- 無資料空狀態 -->
+      <div id="empty-state" class="hidden text-center py-16 bg-white/60 rounded-3xl border-2 border-dashed border-sakura-200 p-8 my-6">
+        <div class="text-6xl mb-3 animate-bounce">🧳</div>
+        <h4 class="text-lg font-black text-choc mb-1">還沒有符合條件的戰利品記錄唷～</h4>
+        <p class="text-sm text-choc/60 mb-4">趕緊點擊右上角的「新增戰利品」，把心愛的寶物記下來吧！</p>
+        <button onclick="document.getElementById('btn-open-add-modal').click()" class="px-5 py-2.5 bg-sakura-400 hover:bg-sakura-500 text-white rounded-2xl font-bold shadow-soft transition-all text-sm">
+          ✨ 記下第一筆購物
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- 新增 / 編輯消費紀錄 彈窗 Modal -->
+  <div id="modal-item" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-choc/40 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200">
+    <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl border-4 border-sakura-100 overflow-hidden transform scale-95 transition-transform duration-200 flex flex-col max-h-[92vh]">
+      
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-sakura-200 via-sakura-100 to-cream px-6 py-4 flex items-center justify-between border-b border-sakura-200">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl" id="modal-icon">🎀</span>
+          <h3 class="text-lg font-black text-choc" id="modal-title">記錄新的戰利品</h3>
+        </div>
+        <button id="btn-close-modal" class="w-8 h-8 rounded-full bg-white/80 hover:bg-white text-choc/70 hover:text-choc flex items-center justify-center transition-all">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body (表單) -->
+      <form id="item-form" class="p-5 sm:p-6 overflow-y-auto space-y-4 text-sm flex-1">
+        <input type="hidden" id="form-item-id">
+
+        <!-- 照片上傳預覽區 -->
+        <div class="space-y-1.5">
+          <label class="block text-xs font-bold text-choc">
+            商品照片 <span class="text-sakura-400 font-normal">(點擊可拍照或選取照片，選填)</span>
+          </label>
+          <div class="flex items-center gap-4">
+            <!-- 預覽框 -->
+            <div id="photo-preview-wrapper" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl border-2 border-dashed border-sakura-300 bg-sakura-50/50 flex flex-col items-center justify-center relative overflow-hidden group cursor-pointer">
+              <img id="form-photo-preview" src="" alt="商品預覽" class="w-full h-full object-cover hidden">
+              <div id="photo-placeholder" class="text-center p-2">
+                <i class="fa-solid fa-camera text-2xl text-sakura-300 group-hover:scale-110 transition-transform"></i>
+                <span class="block text-[10px] text-sakura-400 mt-1 font-bold">上傳照片</span>
+              </div>
+              <input type="file" id="form-photo-input" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer">
+            </div>
+
+            <!-- 操作按鈕 -->
+            <div class="flex-1 space-y-2">
+              <button type="button" onclick="document.getElementById('form-photo-input').click()" class="px-3 py-1.5 bg-sakura-100 hover:bg-sakura-200 text-sakura-600 font-bold rounded-xl text-xs transition-all w-full flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-image"></i> 選擇檔案或拍照
+              </button>
+              <button type="button" id="btn-remove-photo" class="px-3 py-1.5 bg-gray-100 hover:bg-rose-100 text-gray-500 hover:text-rose-500 font-bold rounded-xl text-xs transition-all w-full flex items-center justify-center gap-1.5 hidden">
+                <i class="fa-solid fa-trash-can"></i> 移除照片
+              </button>
+              <p class="text-[11px] text-choc/50">💡 照片會自動智慧縮圖壓縮，完全保存在手機或電腦本地哦！</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 商品名稱 -->
+        <div class="space-y-1">
+          <label for="form-name" class="block text-xs font-bold text-choc">
+            商品名稱 <span class="text-sakura-500">*</span>
+          </label>
+          <input type="text" id="form-name" required placeholder="例：SHISEIDO 小紅瓶精華液、迪士尼雪莉玫娃娃" class="w-full px-3.5 py-2.5 rounded-2xl border border-sakura-200 focus:border-sakura-400 focus:ring-2 focus:ring-sakura-200 outline-none text-choc font-medium">
+        </div>
+
+        <!-- 類別與購買日期 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label for="form-category" class="block text-xs font-bold text-choc">
+              購物類別 <span class="text-sakura-500">*</span>
+            </label>
+            <select id="form-category" required class="w-full px-3 py-2.5 rounded-2xl border border-sakura-200 focus:border-sakura-400 focus:ring-2 focus:ring-sakura-200 outline-none text-choc font-medium bg-white">
+              <option value="beauty">💄 藥妝彩妝</option>
+              <option value="fashion">👗 服飾配件</option>
+              <option value="snacks">🍵 零食伴手禮</option>
+              <option value="anime">🧸 動漫周邊</option>
+              <option value="digital">📷 電器3C</option>
+              <option value="other">🎀 其他雜貨</option>
+            </select>
+          </div>
+
+          <div class="space-y-1">
+            <label for="form-date" class="block text-xs font-bold text-choc">購買日期</label>
+            <input type="date" id="form-date" class="w-full px-3 py-2.5 rounded-2xl border border-sakura-200 focus:border-sakura-400 focus:ring-2 focus:ring-sakura-200 outline-none text-choc font-medium">
+          </div>
+        </div>
+
+        <!-- 幣別與外幣金額 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-sakura-50/60 p-3.5 rounded-2xl border border-sakura-200">
+          <div class="space-y-1">
+            <label for="form-currency" class="block text-xs font-bold text-choc">消費幣別</label>
+            <select id="form-currency" class="w-full px-3 py-2 rounded-xl border border-sakura-200 bg-white font-bold text-choc">
+              <option value="JPY">JPY 日幣 (¥)</option>
+              <option value="KRW">KRW 韓元 (₩)</option>
+              <option value="USD">USD 美元 ($)</option>
+              <option value="EUR">EUR 歐元 (€)</option>
+              <option value="THB">THB 泰銖 (฿)</option>
+              <option value="CUSTOM">自訂幣別</option>
+            </select>
+          </div>
+
+          <div class="space-y-1">
+            <label for="form-foreign-price" class="block text-xs font-bold text-choc">
+              外幣原價金額 <span class="text-sakura-500">*</span>
+            </label>
+            <input type="number" id="form-foreign-price" step="0.01" min="0" required placeholder="0.00" class="w-full px-3 py-2 rounded-xl border border-sakura-200 focus:border-sakura-400 outline-none font-bold text-choc text-right bg-white">
+          </div>
+
+          <!-- 折合台幣即時試算 -->
+          <div class="sm:col-span-2 flex items-center justify-between pt-1 border-t border-sakura-200/70 text-xs">
+            <span class="text-choc/70 font-medium">折合台幣 (TWD)：</span>
+            <div class="flex items-center gap-1.5">
+              <span class="font-bold text-sakura-500">NT$</span>
+              <input type="number" id="form-twd-price" min="0" class="w-28 px-2 py-1 bg-white font-black text-sakura-600 rounded-lg border border-sakura-200 text-right outline-none">
+              <button type="button" id="btn-recalc-twd" title="依當前匯率重算" class="text-sakura-400 hover:text-sakura-600 px-1">
+                <i class="fa-solid fa-arrows-rotate"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 購買地點與支付方式 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="space-y-1">
+            <label for="form-location" class="block text-xs font-bold text-choc">購買店名 / 地點</label>
+            <input type="text" id="form-location" placeholder="例：驚安殿堂唐吉訶德、大丸心齋橋" class="w-full px-3.5 py-2.5 rounded-2xl border border-sakura-200 focus:border-sakura-400 focus:ring-2 focus:ring-sakura-200 outline-none text-choc">
+          </div>
+
+          <div class="space-y-1">
+            <label for="form-payment" class="block text-xs font-bold text-choc">支付方式</label>
+            <select id="form-payment" class="w-full px-3 py-2.5 rounded-2xl border border-sakura-200 focus:border-sakura-400 outline-none text-choc font-medium bg-white">
+              <option value="credit">💳 信用卡 / Apple Pay</option>
+              <option value="cash">💴 當地現金</option>
+              <option value="epay">📲 電子交通卡 / 西瓜卡 / 微信支付</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 購物心得與備註 -->
+        <div class="space-y-1">
+          <label for="form-note" class="block text-xs font-bold text-choc">購物手帳筆記 / 代購註記</label>
+          <textarea id="form-note" rows="2" placeholder="例：幫阿妹代購的保濕精華，免稅後超划算！店員還送了兩個可愛試用包🥰" class="w-full px-3.5 py-2 rounded-2xl border border-sakura-200 focus:border-sakura-400 focus:ring-2 focus:ring-sakura-200 outline-none text-choc text-xs resize-none"></textarea>
+        </div>
+
+        <!-- 表單操作按鈕 -->
+        <div class="pt-2 flex items-center justify-end gap-3">
+          <button type="button" id="btn-cancel-modal" class="px-5 py-2.5 rounded-2xl border-2 border-sakura-200 text-choc/70 font-bold hover:bg-sakura-50 transition-all text-xs sm:text-sm">
+            取消
+          </button>
+          <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-sakura-400 to-sakura-500 hover:from-sakura-500 hover:to-sakura-600 text-white font-bold rounded-2xl shadow-bubble active:shadow-bubble-pressed active:translate-y-1 transition-all text-xs sm:text-sm flex items-center gap-2">
+            <i class="fa-solid fa-heart"></i>
+            <span>儲存戰利品</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- 拍立得相片放大檢視 Modal (Lightbox) -->
+  <div id="modal-lightbox" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-choc/60 backdrop-blur-md hidden opacity-0 transition-opacity duration-200">
+    <div class="relative bg-white p-4 pb-8 sm:p-5 sm:pb-10 rounded-2xl shadow-2xl max-w-sm sm:max-w-md w-full border-4 border-sakura-100 transform rotate-1">
+      <div class="washi-tape washi-tape-pink"></div>
+      <button id="btn-close-lightbox" class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white text-sakura-500 shadow-md font-bold flex items-center justify-center hover:scale-110 transition-transform">
+        ✕
+      </button>
+      <div class="w-full aspect-square rounded-xl overflow-hidden bg-sakura-50 mb-3 border border-sakura-100">
+        <img id="lightbox-image" src="" alt="放大照片" class="w-full h-full object-cover">
+      </div>
+      <h4 id="lightbox-title" class="font-black text-center text-lg text-choc">商品名稱</h4>
+      <p id="lightbox-price" class="text-center font-bold text-sakura-500 text-sm mt-0.5">金額資訊</p>
+      <p id="lightbox-note" class="text-center text-xs text-choc/70 mt-2 italic px-3">備註心得</p>
+    </div>
+  </div>
+
+  <!-- 可愛自訂確認刪除視窗 (取代原生 confirm) -->
+  <div id="modal-confirm" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-choc/30 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200">
+    <div class="bg-white max-w-xs sm:max-w-sm w-full p-6 rounded-3xl shadow-2xl border-4 border-sakura-100 text-center space-y-4">
+      <div class="text-4xl">🥺</div>
+      <div>
+        <h4 class="text-base font-black text-choc">真的要刪除這筆戰利品嗎？</h4>
+        <p class="text-xs text-choc/60 mt-1">刪除後就無法復原這張回憶囉！</p>
+      </div>
+      <div class="flex items-center justify-center gap-3 pt-2">
+        <button id="btn-confirm-cancel" class="px-4 py-2 rounded-2xl border border-sakura-200 text-choc/70 font-bold hover:bg-sakura-50 text-xs">
+          保留它
+        </button>
+        <button id="btn-confirm-ok" class="px-5 py-2 bg-rose-400 hover:bg-rose-500 text-white rounded-2xl font-bold text-xs shadow-sm">
+          確定刪除
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 匯出與備份管理彈窗 -->
+  <div id="modal-export" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-choc/40 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200">
+    <div class="bg-white max-w-sm w-full p-6 rounded-3xl shadow-2xl border-4 border-sakura-100 space-y-4">
+      <div class="flex items-center justify-between border-b border-sakura-100 pb-3">
+        <h4 class="text-base font-black text-choc flex items-center gap-2">
+          📦 資料備份與匯出
+        </h4>
+        <button id="btn-close-export" class="text-choc/40 hover:text-choc">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      
+      <p class="text-xs text-choc/60">所有的戰利品記錄都妥善保存在你的瀏覽器中，你可以隨時下載備份成檔案或在不同裝置復原！</p>
+
+      <div class="space-y-2 pt-1">
+        <button id="btn-export-csv" class="w-full py-2.5 px-4 bg-sakura-50 hover:bg-sakura-100 text-choc font-bold rounded-2xl border border-sakura-200 flex items-center justify-between text-xs transition-all">
+          <span class="flex items-center gap-2">
+            <i class="fa-solid fa-file-csv text-green-500 text-base"></i>
+            匯出為 Excel / CSV 試算表
+          </span>
+          <i class="fa-solid fa-download text-sakura-400"></i>
+        </button>
+
+        <button id="btn-export-json" class="w-full py-2.5 px-4 bg-sakura-50 hover:bg-sakura-100 text-choc font-bold rounded-2xl border border-sakura-200 flex items-center justify-between text-xs transition-all">
+          <span class="flex items-center gap-2">
+            <i class="fa-solid fa-file-code text-amber-500 text-base"></i>
+            匯出完整 JSON 備份檔
+          </span>
+          <i class="fa-solid fa-download text-sakura-400"></i>
+        </button>
+
+        <!-- 匯入 JSON -->
+        <label class="w-full py-2.5 px-4 bg-cream hover:bg-sakura-50 text-choc font-bold rounded-2xl border border-dashed border-sakura-300 flex items-center justify-between text-xs cursor-pointer transition-all">
+          <span class="flex items-center gap-2">
+            <i class="fa-solid fa-file-import text-sakura-400 text-base"></i>
+            匯入備份 JSON 檔案
+          </span>
+          <span class="text-[10px] bg-sakura-100 text-sakura-600 px-2 py-0.5 rounded-lg">選取檔案</span>
+          <input type="file" id="input-import-json" accept=".json" class="hidden">
+        </label>
+      </div>
+
+      <div class="pt-2 border-t border-sakura-100">
+        <button id="btn-reset-sample" class="w-full py-2 text-choc/50 hover:text-sakura-500 text-xs font-bold text-center transition-colors">
+          🔄 重新載入可愛範例資料
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 可愛 Toast 通知提示 (取代原生 alert) -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-white/95 px-5 py-3 rounded-2xl border-2 border-sakura-300 shadow-soft transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-2.5 text-xs sm:text-sm font-bold text-choc">
+    <span id="toast-icon" class="text-lg">✨</span>
+    <span id="toast-msg">操作成功！</span>
+  </div>
+
+  <script>
+    // 預設匯率與幣別資料
+    const DEFAULT_CURRENCIES = {
+      JPY: { name: '日幣 JPY (¥)', symbol: '¥', defaultRate: 0.2100 },
+      KRW: { name: '韓元 KRW (₩)', symbol: '₩', defaultRate: 0.0240 },
+      USD: { name: '美元 USD ($)', symbol: '$', defaultRate: 32.2000 },
+      EUR: { name: '歐元 EUR (€)', symbol: '€', defaultRate: 34.8000 },
+      THB: { name: '泰銖 THB (฿)', symbol: '฿', defaultRate: 0.9500 },
+      CUSTOM: { name: '自訂幣別', symbol: '★', defaultRate: 1.0000 }
+    };
+
+    // 類別設定與可愛顏色配置
+    const CATEGORIES = {
+      beauty: { label: '藥妝彩妝', icon: 'fa-wand-magic-sparkles', color: 'bg-pink-100 text-pink-600 border-pink-200', barColor: '#F472B6' },
+      fashion: { label: '服飾配件', icon: 'fa-shirt', color: 'bg-purple-100 text-purple-600 border-purple-200', barColor: '#A855F7' },
+      snacks: { label: '零食伴手禮', icon: 'fa-cookie-bite', color: 'bg-amber-100 text-amber-700 border-amber-200', barColor: '#F59E0B' },
+      anime: { label: '動漫周邊', icon: 'fa-gamepad', color: 'bg-blue-100 text-blue-600 border-blue-200', barColor: '#3B82F6' },
+      digital: { label: '電器3C', icon: 'fa-camera-retro', color: 'bg-teal-100 text-teal-700 border-teal-200', barColor: '#14B8A6' },
+      other: { label: '其他雜貨', icon: 'fa-gift', color: 'bg-rose-100 text-rose-600 border-rose-200', barColor: '#FB7185' }
+    };
+
+    // 預設可愛 SVG 插圖作為照片 Fallback
+    function getCategoryFallbackSvg(category) {
+      const colors = {
+        beauty: { bg: '#FFE4E6', icon: '💄', text: 'Cosmetics' },
+        fashion: { bg: '#F3E8FF', icon: '👗', text: 'Fashion' },
+        snacks: { bg: '#FEF3C7', icon: '🍵', text: 'Souvenir' },
+        anime: { bg: '#E0F2FE', icon: '🧸', text: 'Anime & Toys' },
+        digital: { bg: '#CCFBF1', icon: '📷', text: 'Gadget 3C' },
+        other: { bg: '#FFE4E6', icon: '🎀', text: 'Treasures' }
+      };
+      const conf = colors[category] || colors.other;
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+          <rect width="400" height="400" fill="${conf.bg}"/>
+          <circle cx="200" cy="180" r="90" fill="#FFFFFF" opacity="0.85"/>
+          <text x="200" y="200" font-size="80" text-anchor="middle" dominant-baseline="middle">${conf.icon}</text>
+          <text x="200" y="320" font-family="'Zen Maru Gothic', sans-serif" font-weight="bold" font-size="24" fill="#5C4A47" text-anchor="middle">${conf.text}</text>
+        </svg>
+      `;
+      return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+    }
+
+    // 初始範例資料
+    const SAMPLE_ITEMS = [
+      {
+        id: 'sample-1',
+        name: '東京迪士尼達菲熊 Duffy 玩偶',
+        category: 'anime',
+        currency: 'JPY',
+        foreignPrice: 4500,
+        rate: 0.21,
+        twdPrice: 945,
+        payment: 'credit',
+        location: '東京迪士尼海洋 (Tokyo DisneySea)',
+        date: '2024-04-12',
+        image: '',
+        note: '排隊買到的春季限定小水手造型！抱起來軟綿綿超療癒～'
+      },
+      {
+        id: 'sample-2',
+        name: '&honey 蜂蜜柔順深層保濕洗髮精組合',
+        category: 'beauty',
+        currency: 'JPY',
+        foreignPrice: 2800,
+        rate: 0.21,
+        twdPrice: 588,
+        payment: 'credit',
+        location: '松本清 澀谷旗艦店',
+        date: '2024-04-13',
+        image: '',
+        note: '日本境內限定櫻花香氛限定版🌸 退稅後比在台灣買便宜快一半！'
+      },
+      {
+        id: 'sample-3',
+        name: '京都抹茶白巧克力夾心餅乾 (16入)',
+        category: 'snacks',
+        currency: 'JPY',
+        foreignPrice: 1980,
+        rate: 0.21,
+        twdPrice: 416,
+        payment: 'cash',
+        location: '大丸心齋橋百貨地下街',
+        date: '2024-04-14',
+        image: '',
+        note: '要送給同事與家人的超人氣伴手禮，茶香超濃郁不會太甜。'
+      },
+      {
+        id: 'sample-4',
+        name: 'BEAMS 刺繡帆布兩用托特包',
+        category: 'fashion',
+        currency: 'JPY',
+        foreignPrice: 6600,
+        rate: 0.21,
+        twdPrice: 1386,
+        payment: 'credit',
+        location: 'LUMINE EST 新宿',
+        date: '2024-04-15',
+        image: '',
+        note: '奶白色百搭帆布包，容量剛剛好可以放下 iPad 和水壺！'
+      }
+    ];
+
+    // 應用程式狀態 (State)
+    let appState = {
+      items: [],
+      currentCurrency: 'JPY',
+      rates: {},
+      viewMode: 'grid', // 'grid' | 'list'
+      searchQuery: '',
+      filterCategory: 'ALL',
+      filterCurrency: 'ALL',
+      sortBy: 'date-desc',
+      deleteTargetId: null
+    };
+
+    // 本地儲存鍵值
+    const STORAGE_KEY_ITEMS = 'kawaii_loot_items_v2';
+    const STORAGE_KEY_RATES = 'kawaii_loot_rates_v2';
+    const STORAGE_KEY_ACTIVE_CURR = 'kawaii_loot_active_curr_v2';
+
+    /**
+     * 智慧壓縮上傳的圖片為合理大小之 Data URL，避免突破 localStorage 5MB 限制
+     */
+    function compressImage(file, maxWidth = 500, quality = 0.75) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+          const img = new Image();
+          img.src = event.target.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+
+            if (width > maxWidth) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+            resolve(compressedDataUrl);
+          };
+          img.onerror = (err) => reject(err);
+        };
+        reader.onerror = (err) => reject(err);
+      });
+    }
+
+    // Toast 提示工具
+    function showToast(message, icon = '✨') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = message;
+      document.getElementById('toast-icon').textContent = icon;
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 2600);
+    }
+
+    // 初始化或讀取 LocalStorage
+    function initData() {
+      // 讀取匯率
+      const savedRates = localStorage.getItem(STORAGE_KEY_RATES);
+      if (savedRates) {
+        try {
+          appState.rates = JSON.parse(savedRates);
+        } catch(e) {
+          console.error(e);
+        }
+      }
+      // 填補缺少的幣別預設匯率
+      Object.keys(DEFAULT_CURRENCIES).forEach(c => {
+        if (!appState.rates[c]) {
+          appState.rates[c] = DEFAULT_CURRENCIES[c].defaultRate;
+        }
+      });
+
+      // 讀取當前選擇幣別
+      const savedCurr = localStorage.getItem(STORAGE_KEY_ACTIVE_CURR);
+      if (savedCurr && DEFAULT_CURRENCIES[savedCurr]) {
+        appState.currentCurrency = savedCurr;
+      }
+
+      // 讀取商品列表
+      const savedItems = localStorage.getItem(STORAGE_KEY_ITEMS);
+      if (savedItems) {
+        try {
+          appState.items = JSON.parse(savedItems);
+        } catch (e) {
+          appState.items = [...SAMPLE_ITEMS];
+        }
+      } else {
+        appState.items = [...SAMPLE_ITEMS];
+        saveItemsToStorage();
+      }
+    }
+
+    function saveItemsToStorage() {
+      try {
+        localStorage.setItem(STORAGE_KEY_ITEMS, JSON.stringify(appState.items));
+      } catch (err) {
+        showToast('儲存失敗：空間不足，請刪除部分過大照片！🥺', '⚠️');
+      }
+    }
+
+    function saveRatesToStorage() {
+      localStorage.setItem(STORAGE_KEY_RATES, JSON.stringify(appState.rates));
+      localStorage.setItem(STORAGE_KEY_ACTIVE_CURR, appState.currentCurrency);
+    }
+
+    // 渲染幣別選擇鈕
+    function renderCurrencyPills() {
+      const container = document.getElementById('currency-pills-container');
+      container.innerHTML = '';
+
+      Object.keys(DEFAULT_CURRENCIES).forEach(currKey => {
+        const curr = DEFAULT_CURRENCIES[currKey];
+        const isActive = appState.currentCurrency === currKey;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `px-3.5 py-1.5 rounded-2xl text-xs sm:text-sm font-black transition-all flex items-center gap-1.5 ${
+          isActive 
+            ? 'bg-gradient-to-r from-sakura-400 to-sakura-500 text-white shadow-sm scale-105' 
+            : 'bg-sakura-50 hover:bg-sakura-100 text-choc/80'
+        }`;
+        btn.innerHTML = `<span>${currKey}</span><span class="text-[11px] opacity-80">${curr.symbol}</span>`;
+        btn.addEventListener('click', () => {
+          appState.currentCurrency = currKey;
+          saveRatesToStorage();
+          updateRateDisplay();
+          renderApp();
+          showToast(`已切換為 ${curr.name}`, '💱');
+        });
+        container.appendChild(btn);
+      });
+    }
+
+    // 更新匯率設定框顯示
+    function updateRateDisplay() {
+      const currentRate = appState.rates[appState.currentCurrency] || 1;
+      document.getElementById('rate-symbol-preview').textContent = `1 ${appState.currentCurrency} =`;
+      document.getElementById('input-current-rate').value = currentRate;
+    }
+
+    // 計算並渲染統計儀表板
+    function renderStatistics() {
+      const items = appState.items;
+      
+      // 總台幣
+      const totalTwd = items.reduce((sum, item) => sum + (Number(item.twdPrice) || 0), 0);
+      document.getElementById('stat-total-twd').textContent = totalTwd.toLocaleString();
+
+      // 當前幣別外幣總額
+      const foreignSum = items
+        .filter(item => item.currency === appState.currentCurrency)
+        .reduce((sum, item) => sum + (Number(item.foreignPrice) || 0), 0);
+      document.getElementById('stat-currency-label').textContent = appState.currentCurrency;
+      document.getElementById('stat-total-foreign').textContent = foreignSum.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+
+      // 總件數
+      document.getElementById('stat-total-items').textContent = items.length;
+
+      // 最高身價商品
+      if (items.length > 0) {
+        const topItem = [...items].sort((a, b) => (Number(b.twdPrice) || 0) - (Number(a.twdPrice) || 0))[0];
+        document.getElementById('stat-max-name').textContent = topItem.name;
+        document.getElementById('stat-max-price').textContent = `NT$ ${(Number(topItem.twdPrice) || 0).toLocaleString()}`;
+      } else {
+        document.getElementById('stat-max-name').textContent = '尚無紀錄';
+        document.getElementById('stat-max-price').textContent = 'NT$ 0';
+      }
+
+      // 類別長條圖與佔比
+      renderCategoryBreakdown(totalTwd);
+    }
+
+    // 類別支出比例渲染
+    function renderCategoryBreakdown(totalTwd) {
+      const categoryTotals = {};
+      Object.keys(CATEGORIES).forEach(k => categoryTotals[k] = 0);
+
+      appState.items.forEach(item => {
+        const cat = item.category || 'other';
+        categoryTotals[cat] = (categoryTotals[cat] || 0) + (Number(item.twdPrice) || 0);
+      });
+
+      const stackedBar = document.getElementById('category-stacked-bar');
+      const legends = document.getElementById('category-legends');
+      stackedBar.innerHTML = '';
+      legends.innerHTML = '';
+
+      if (totalTwd === 0) {
+        stackedBar.innerHTML = `<div class="w-full h-full bg-sakura-100 flex items-center justify-center text-[10px] text-choc/50 font-bold">尚無支出數據</div>`;
+      }
+
+      Object.keys(CATEGORIES).forEach(catKey => {
+        const cat = CATEGORIES[catKey];
+        const amount = categoryTotals[catKey] || 0;
+        const percentage = totalTwd > 0 ? ((amount / totalTwd) * 100) : 0;
+
+        // 堆疊長條
+        if (percentage > 0) {
+          const segment = document.createElement('div');
+          segment.style.width = `${percentage}%`;
+          segment.style.backgroundColor = cat.barColor;
+          segment.className = 'h-full transition-all duration-500 hover:opacity-90';
+          segment.title = `${cat.label}: NT$ ${amount.toLocaleString()} (${percentage.toFixed(1)}%)`;
+          stackedBar.appendChild(segment);
+        }
+
+        // 下方圖例
+        const legendItem = document.createElement('div');
+        legendItem.className = 'bg-sakura-50/70 p-2 rounded-2xl border border-sakura-100 flex flex-col justify-between';
+        legendItem.innerHTML = `
+          <div class="flex items-center gap-1.5 mb-1">
+            <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${cat.barColor}"></span>
+            <span class="text-[11px] font-bold text-choc truncate">${cat.label}</span>
+          </div>
+          <div class="flex items-baseline justify-between text-xs">
+            <span class="font-extrabold text-choc">NT$ ${amount.toLocaleString()}</span>
+            <span class="text-[10px] text-choc/60 font-bold">${percentage.toFixed(0)}%</span>
+          </div>
+        `;
+        legends.appendChild(legendItem);
+      });
+    }
+
+    // 依篩選條件過濾與排序商品
+    function getFilteredItems() {
+      let filtered = [...appState.items];
+
+      // 關鍵字搜尋
+      if (appState.searchQuery.trim()) {
+        const query = appState.searchQuery.toLowerCase();
+        filtered = filtered.filter(item => 
+          (item.name && item.name.toLowerCase().includes(query)) ||
+          (item.location && item.location.toLowerCase().includes(query)) ||
+          (item.note && item.note.toLowerCase().includes(query))
+        );
+      }
+
+      // 類別過濾
+      if (appState.filterCategory !== 'ALL') {
+        filtered = filtered.filter(item => item.category === appState.filterCategory);
+      }
+
+      // 幣別過濾
+      if (appState.filterCurrency !== 'ALL') {
+        filtered = filtered.filter(item => item.currency === appState.filterCurrency);
+      }
+
+      // 排序
+      filtered.sort((a, b) => {
+        if (appState.sortBy === 'date-desc') {
+          return new Date(b.date || 0) - new Date(a.date || 0);
+        } else if (appState.sortBy === 'date-asc') {
+          return new Date(a.date || 0) - new Date(b.date || 0);
+        } else if (appState.sortBy === 'price-desc') {
+          return (Number(b.twdPrice) || 0) - (Number(a.twdPrice) || 0);
+        } else if (appState.sortBy === 'price-asc') {
+          return (Number(a.twdPrice) || 0) - (Number(b.twdPrice) || 0);
+        }
+        return 0;
+      });
+
+      return filtered;
+    }
+
+    // 渲染商品展示區 (Grid / List)
+    function renderItemsList() {
+      const gridContainer = document.getElementById('items-grid-container');
+      const listContainer = document.getElementById('items-list-container');
+      const emptyState = document.getElementById('empty-state');
+
+      const items = getFilteredItems();
+
+      if (items.length === 0) {
+        gridContainer.classList.add('hidden');
+        listContainer.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      if (appState.viewMode === 'grid') {
+        gridContainer.classList.remove('hidden');
+        listContainer.classList.add('hidden');
+        renderGridView(gridContainer, items);
+      } else {
+        gridContainer.classList.add('hidden');
+        listContainer.classList.remove('hidden');
+        renderListView(listContainer, items);
+      }
+    }
+
+    // 渲染拍立得卡片 (Polaroid Grid View)
+    function renderGridView(container, items) {
+      container.innerHTML = '';
+
+      items.forEach((item, index) => {
+        const cat = CATEGORIES[item.category] || CATEGORIES.other;
+        const imgUrl = item.image || getCategoryFallbackSvg(item.category);
+        const currSymbol = (DEFAULT_CURRENCIES[item.currency] && DEFAULT_CURRENCIES[item.currency].symbol) || item.currency;
+
+        // 輪流切換紙膠帶顏色與微微傾斜
+        const tapes = ['washi-tape-pink', '', 'washi-tape-lavender'];
+        const tapeClass = tapes[index % tapes.length];
+        const tilts = ['hover:rotate-1', 'hover:-rotate-1', 'hover:rotate-2', 'hover:-rotate-2'];
+        const tiltClass = tilts[index % tilts.length];
+
+        const card = document.createElement('div');
+        card.className = `group bg-white rounded-3xl p-4 shadow-polaroid border-2 border-sakura-100/80 relative flex flex-col justify-between transition-all duration-300 transform ${tiltClass}`;
+
+        card.innerHTML = `
+          <div class="washi-tape ${tapeClass}"></div>
+          
+          <div>
+            <!-- 拍立得照片區 -->
+            <div class="relative w-full aspect-square rounded-2xl overflow-hidden bg-sakura-50 border border-sakura-100 cursor-pointer shadow-inner" onclick="openLightbox('${item.id}')">
+              <img src="${imgUrl}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-choc/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-1 backdrop-blur-[1px]">
+                <i class="fa-solid fa-magnifying-glass-plus"></i> 點擊放大
+              </div>
+              <span class="absolute top-2 left-2 text-[11px] font-black px-2.5 py-0.5 rounded-full border shadow-sm ${cat.color}">
+                <i class="fa-solid ${cat.icon} mr-1"></i>${cat.label}
+              </span>
+            </div>
+
+            <!-- 商品詳情 -->
+            <div class="pt-3 pb-1">
+              <h3 class="font-black text-choc text-base leading-snug line-clamp-2 title-text mb-1" title="${item.name}">
+                ${item.name}
+              </h3>
+
+              <!-- 地點與日期 -->
+              <div class="flex items-center gap-2 text-xs text-choc/55 mb-2">
+                <span class="truncate"><i class="fa-solid fa-location-dot text-sakura-400 mr-1"></i>${item.location || '國外商店'}</span>
+                <span>•</span>
+                <span class="whitespace-nowrap"><i class="fa-regular fa-calendar text-sakura-400 mr-1"></i>${item.date || '無日期'}</span>
+              </div>
+
+              <!-- 金額標籤 (外幣 + 台幣) -->
+              <div class="bg-sakura-50/70 p-2.5 rounded-2xl border border-sakura-100 flex items-baseline justify-between">
+                <div>
+                  <span class="text-[10px] text-choc/50 font-bold block">原價金額</span>
+                  <span class="text-xs font-bold text-choc/80">${currSymbol} ${Number(item.foreignPrice).toLocaleString()}</span>
+                </div>
+                <div class="text-right">
+                  <span class="text-[10px] text-sakura-500 font-bold block">換算台幣</span>
+                  <span class="text-base font-black text-sakura-500">NT$ ${Number(item.twdPrice).toLocaleString()}</span>
+                </div>
+              </div>
+
+              <!-- 心得備註小氣泡 -->
+              ${item.note ? `
+                <div class="mt-2.5 bg-cream px-3 py-2 rounded-xl text-xs text-choc/75 border border-dashed border-sakura-200 line-clamp-2 italic">
+                  💬 "${item.note}"
+                </div>
+              ` : ''}
+            </div>
+          </div>
+
+          <!-- 卡片底層功能按鈕 (編輯 & 刪除) -->
+          <div class="pt-3 mt-2 border-t border-sakura-100/70 flex items-center justify-between">
+            <span class="text-[11px] text-choc/50 font-bold">
+              ${item.payment === 'credit' ? '💳 信用卡' : item.payment === 'cash' ? '💴 現金' : '📲 電子支付'}
+            </span>
+            <div class="flex items-center gap-1.5">
+              <button onclick="editItem('${item.id}')" class="w-8 h-8 rounded-xl bg-sakura-50 hover:bg-sakura-100 text-sakura-600 flex items-center justify-center transition-all text-xs font-bold" title="編輯">
+                <i class="fa-solid fa-pen"></i>
+              </button>
+              <button onclick="promptDeleteItem('${item.id}')" class="w-8 h-8 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-500 flex items-center justify-center transition-all text-xs font-bold" title="刪除">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // 渲染條列式筆記 (List View)
+    function renderListView(container, items) {
+      container.innerHTML = '';
+
+      items.forEach(item => {
+        const cat = CATEGORIES[item.category] || CATEGORIES.other;
+        const imgUrl = item.image || getCategoryFallbackSvg(item.category);
+        const currSymbol = (DEFAULT_CURRENCIES[item.currency] && DEFAULT_CURRENCIES[item.currency].symbol) || item.currency;
+
+        const row = document.createElement('div');
+        row.className = 'bg-white rounded-2xl p-3 sm:p-4 shadow-sm border border-sakura-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 hover:shadow-soft transition-all';
+
+        row.innerHTML = `
+          <div class="flex items-center gap-3 w-full sm:w-auto">
+            <!-- 縮圖 -->
+            <div class="w-14 h-14 rounded-xl overflow-hidden bg-sakura-50 border border-sakura-100 flex-shrink-0 cursor-pointer" onclick="openLightbox('${item.id}')">
+              <img src="${imgUrl}" alt="${item.name}" class="w-full h-full object-cover">
+            </div>
+
+            <!-- 名稱與標籤 -->
+            <div class="flex-1 min-w-0">
+              <div class="flex flex-wrap items-center gap-1.5 mb-1">
+                <span class="text-[10px] font-black px-2 py-0.5 rounded-full border ${cat.color}">
+                  ${cat.label}
+                </span>
+                <span class="text-xs text-choc/50">📅 ${item.date || '無日期'}</span>
+                <span class="text-xs text-choc/50">📍 ${item.location || '國外'}</span>
+              </div>
+              <h4 class="font-black text-sm text-choc truncate">${item.name}</h4>
+              ${item.note ? `<p class="text-xs text-choc/60 truncate mt-0.5">💬 ${item.note}</p>` : ''}
+            </div>
+          </div>
+
+          <!-- 金額與操作 -->
+          <div class="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto border-t sm:border-t-0 pt-2 sm:pt-0 border-sakura-50">
+            <div class="text-right">
+              <span class="text-[10px] text-choc/50 font-bold block">${currSymbol} ${Number(item.foreignPrice).toLocaleString()}</span>
+              <span class="text-base font-black text-sakura-500">NT$ ${Number(item.twdPrice).toLocaleString()}</span>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <button onclick="editItem('${item.id}')" class="w-8 h-8 rounded-xl bg-sakura-50 hover:bg-sakura-100 text-sakura-600 flex items-center justify-center transition-all text-xs font-bold">
+                <i class="fa-solid fa-pen"></i>
+              </button>
+              <button onclick="promptDeleteItem('${item.id}')" class="w-8 h-8 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-500 flex items-center justify-center transition-all text-xs font-bold">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    // 總更新 UI 入口
+    function renderApp() {
+      renderCurrencyPills();
+      updateRateDisplay();
+      renderStatistics();
+      renderItemsList();
+    }
+
+    // 表單處理：新增 / 編輯 Modal 控制
+    const modalItem = document.getElementById('modal-item');
+    const formPhotoInput = document.getElementById('form-photo-input');
+    const formPhotoPreview = document.getElementById('form-photo-preview');
+    const photoPlaceholder = document.getElementById('photo-placeholder');
+    const btnRemovePhoto = document.getElementById('btn-remove-photo');
+    let currentPhotoBase64 = '';
+
+    function openItemModal(itemToEdit = null) {
+      const form = document.getElementById('item-form');
+      form.reset();
+
+      if (itemToEdit) {
+        document.getElementById('modal-title').textContent = '編輯戰利品紀錄';
+        document.getElementById('modal-icon').textContent = '✏️';
+        document.getElementById('form-item-id').value = itemToEdit.id;
+        document.getElementById('form-name').value = itemToEdit.name;
+        document.getElementById('form-category').value = itemToEdit.category;
+        document.getElementById('form-date').value = itemToEdit.date || '';
+        document.getElementById('form-currency').value = itemToEdit.currency;
+        document.getElementById('form-foreign-price').value = itemToEdit.foreignPrice;
+        document.getElementById('form-twd-price').value = itemToEdit.twdPrice;
+        document.getElementById('form-location').value = itemToEdit.location || '';
+        document.getElementById('form-payment').value = itemToEdit.payment || 'credit';
+        document.getElementById('form-note').value = itemToEdit.note || '';
+
+        currentPhotoBase64 = itemToEdit.image || '';
+        if (currentPhotoBase64) {
+          formPhotoPreview.src = currentPhotoBase64;
+          formPhotoPreview.classList.remove('hidden');
+          photoPlaceholder.classList.add('hidden');
+          btnRemovePhoto.classList.remove('hidden');
+        } else {
+          formPhotoPreview.classList.add('hidden');
+          photoPlaceholder.classList.remove('hidden');
+          btnRemovePhoto.classList.add('hidden');
+        }
+      } else {
+        document.getElementById('modal-title').textContent = '記錄新的戰利品';
+        document.getElementById('modal-icon').textContent = '🎀';
+        document.getElementById('form-item-id').value = '';
+        document.getElementById('form-currency').value = appState.currentCurrency;
+        
+        // 預設今天日期
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('form-date').value = today;
+
+        currentPhotoBase64 = '';
+        formPhotoPreview.classList.add('hidden');
+        photoPlaceholder.classList.remove('hidden');
+        btnRemovePhoto.classList.add('hidden');
+      }
+
+      modalItem.classList.remove('hidden');
+      setTimeout(() => {
+        modalItem.classList.remove('opacity-0');
+        modalItem.querySelector('div').classList.remove('scale-95');
+      }, 10);
+    }
+
+    function closeItemModal() {
+      modalItem.classList.add('opacity-0');
+      modalItem.querySelector('div').classList.add('scale-95');
+      setTimeout(() => {
+        modalItem.classList.add('hidden');
+      }, 200);
+    }
+
+    // 照片上傳監聽 (進行優雅縮圖壓縮)
+    formPhotoInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      try {
+        const compressed = await compressImage(file, 600, 0.75);
+        currentPhotoBase64 = compressed;
+        formPhotoPreview.src = compressed;
+        formPhotoPreview.classList.remove('hidden');
+        photoPlaceholder.classList.add('hidden');
+        btnRemovePhoto.classList.remove('hidden');
+        showToast('照片上傳並最佳化完成！📸', '✨');
+      } catch (err) {
+        showToast('圖片讀取失敗，請換一張試試！', '❌');
+      }
+    });
+
+    // 移除照片
+    btnRemovePhoto.addEventListener('click', () => {
+      currentPhotoBase64 = '';
+      formPhotoInput.value = '';
+      formPhotoPreview.classList.add('hidden');
+      photoPlaceholder.classList.remove('hidden');
+      btnRemovePhoto.classList.add('hidden');
+    });
+
+    // 外幣金額輸入時即時連動台幣換算
+    const formForeignInput = document.getElementById('form-foreign-price');
+    const formCurrencySelect = document.getElementById('form-currency');
+    const formTwdInput = document.getElementById('form-twd-price');
+
+    function autoCalculateTwd() {
+      const foreignVal = parseFloat(formForeignInput.value);
+      const curr = formCurrencySelect.value;
+      const rate = appState.rates[curr] || 1;
+
+      if (!isNaN(foreignVal) && foreignVal >= 0) {
+        formTwdInput.value = Math.round(foreignVal * rate);
+      } else {
+        formTwdInput.value = '';
+      }
+    }
+
+    formForeignInput.addEventListener('input', autoCalculateTwd);
+    formCurrencySelect.addEventListener('change', autoCalculateTwd);
+    document.getElementById('btn-recalc-twd').addEventListener('click', autoCalculateTwd);
+
+    // 儲存表單提交
+    document.getElementById('item-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const editId = document.getElementById('form-item-id').value;
+      const name = document.getElementById('form-name').value.trim();
+      const category = document.getElementById('form-category').value;
+      const date = document.getElementById('form-date').value;
+      const currency = document.getElementById('form-currency').value;
+      const foreignPrice = parseFloat(document.getElementById('form-foreign-price').value) || 0;
+      let twdPrice = parseFloat(document.getElementById('form-twd-price').value);
+      
+      if (isNaN(twdPrice)) {
+        const rate = appState.rates[currency] || 1;
+        twdPrice = Math.round(foreignPrice * rate);
+      }
+
+      const location = document.getElementById('form-location').value.trim();
+      const payment = document.getElementById('form-payment').value;
+      const note = document.getElementById('form-note').value.trim();
+
+      if (editId) {
+        // 更新既有紀錄
+        const index = appState.items.findIndex(it => it.id === editId);
+        if (index !== -1) {
+          appState.items[index] = {
+            ...appState.items[index],
+            name, category, date, currency,
+            foreignPrice, twdPrice, location, payment, note,
+            image: currentPhotoBase64 || appState.items[index].image
+          };
+          showToast('戰利品修改完成囉！✨', '💖');
+        }
+      } else {
+        // 新增紀錄
+        const newItem = {
+          id: 'loot-' + Date.now(),
+          name, category, date, currency,
+          foreignPrice, twdPrice, location, payment, note,
+          image: currentPhotoBase64
+        };
+        appState.items.unshift(newItem);
+        showToast('成功收錄一件新寶物！🛍️', '🎉');
+      }
+
+      saveItemsToStorage();
+      closeItemModal();
+      renderApp();
+    });
+
+    // 編輯項目觸發
+    window.editItem = function(id) {
+      const item = appState.items.find(it => it.id === id);
+      if (item) {
+        openItemModal(item);
+      }
+    };
+
+    // 刪除確認 Modal 邏輯 (取代原生 confirm)
+    const modalConfirm = document.getElementById('modal-confirm');
+    window.promptDeleteItem = function(id) {
+      appState.deleteTargetId = id;
+      modalConfirm.classList.remove('hidden');
+      setTimeout(() => {
+        modalConfirm.classList.remove('opacity-0');
+      }, 10);
+    };
+
+    document.getElementById('btn-confirm-cancel').addEventListener('click', () => {
+      modalConfirm.classList.add('opacity-0');
+      setTimeout(() => modalConfirm.classList.add('hidden'), 200);
+      appState.deleteTargetId = null;
+    });
+
+    document.getElementById('btn-confirm-ok').addEventListener('click', () => {
+      if (appState.deleteTargetId) {
+        appState.items = appState.items.filter(it => it.id !== appState.deleteTargetId);
+        saveItemsToStorage();
+        renderApp();
+        showToast('已從清單中移除 🗑️', '🌸');
+      }
+      modalConfirm.classList.add('opacity-0');
+      setTimeout(() => modalConfirm.classList.add('hidden'), 200);
+      appState.deleteTargetId = null;
+    });
+
+    // 拍立得 Lightbox 照片放大檢視
+    const modalLightbox = document.getElementById('modal-lightbox');
+    window.openLightbox = function(id) {
+      const item = appState.items.find(it => it.id === id);
+      if (!item) return;
+
+      const imgUrl = item.image || getCategoryFallbackSvg(item.category);
+      document.getElementById('lightbox-image').src = imgUrl;
+      document.getElementById('lightbox-title').textContent = item.name;
+      const currSymbol = (DEFAULT_CURRENCIES[item.currency] && DEFAULT_CURRENCIES[item.currency].symbol) || item.currency;
+      document.getElementById('lightbox-price').textContent = `${currSymbol} ${Number(item.foreignPrice).toLocaleString()} (折合 NT$ ${Number(item.twdPrice).toLocaleString()})`;
+      document.getElementById('lightbox-note').textContent = item.note ? `"${item.note}"` : '✨ 旅途中的珍貴戰利品';
+
+      modalLightbox.classList.remove('hidden');
+      setTimeout(() => modalLightbox.classList.remove('opacity-0'), 10);
+    };
+
+    document.getElementById('btn-close-lightbox').addEventListener('click', () => {
+      modalLightbox.classList.add('opacity-0');
+      setTimeout(() => modalLightbox.classList.add('hidden'), 200);
+    });
+
+    // 匯出 CSV (處理 UTF-8 BOM 以相容 Excel 繁體中文)
+    function exportToCSV() {
+      if (appState.items.length === 0) {
+        showToast('目前清單沒有任何項目可匯出唷！', '📝');
+        return;
+      }
+
+      const headers = ['商品名稱', '分類', '購買日期', '原幣別', '外幣金額', '折合台幣(TWD)', '購買地點', '支付方式', '備註心得'];
+      const rows = appState.items.map(it => [
+        `"${(it.name || '').replace(/"/g, '""')}"`,
+        `"${(CATEGORIES[it.category]?.label || it.category || '')}"`,
+        `"${it.date || ''}"`,
+        `"${it.currency || ''}"`,
+        it.foreignPrice || 0,
+        it.twdPrice || 0,
+        `"${(it.location || '').replace(/"/g, '""')}"`,
+        `"${it.payment === 'credit' ? '信用卡' : it.payment === 'cash' ? '現金' : '電子支付'}"`,
+        `"${(it.note || '').replace(/"/g, '""')}"`
+      ]);
+
+      const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.setAttribute('download', `戰利品記帳_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('CSV 試算表已成功下載！📊', '📥');
+    }
+
+    // 匯出 JSON 備份
+    function exportToJSON() {
+      const backupData = {
+        version: '2.0',
+        exportedAt: new Date().toISOString(),
+        rates: appState.rates,
+        items: appState.items
+      };
+      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(backupData, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute('href', dataStr);
+      downloadAnchor.setAttribute('download', `戰利品備份_${new Date().toISOString().slice(0,10)}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast('JSON 完整備份檔已下載！💾', '✨');
+    }
+
+    // 匯入 JSON 備份
+    document.getElementById('input-import-json').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        try {
+          const imported = JSON.parse(event.target.result);
+          if (Array.isArray(imported.items)) {
+            appState.items = imported.items;
+            if (imported.rates) {
+              appState.rates = { ...appState.rates, ...imported.rates };
+            }
+            saveItemsToStorage();
+            saveRatesToStorage();
+            renderApp();
+            document.getElementById('modal-export').classList.add('hidden');
+            showToast(`成功復原 ${imported.items.length} 件戰利品！💖`, '🎉');
+          } else {
+            showToast('JSON 格式不正確，找不到戰利品清單！', '❌');
+          }
+        } catch (err) {
+          showToast('解析備份檔案失敗，請檢查檔案格式！', '⚠️');
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    // 匯率手動儲存按鈕
+    document.getElementById('btn-save-rate').addEventListener('click', () => {
+      const newRate = parseFloat(document.getElementById('input-current-rate').value);
+      if (newRate > 0) {
+        appState.rates[appState.currentCurrency] = newRate;
+        saveRatesToStorage();
+        showToast(`已更新 ${appState.currentCurrency} 匯率為 ${newRate}！🔄`, '💱');
+        renderApp();
+      } else {
+        showToast('請輸入大於 0 的有效匯率！', '⚠️');
+      }
+    });
+
+    // 搜尋與篩選監聽
+    document.getElementById('search-input').addEventListener('input', (e) => {
+      appState.searchQuery = e.target.value;
+      renderItemsList();
+    });
+
+    document.getElementById('filter-category').addEventListener('change', (e) => {
+      appState.filterCategory = e.target.value;
+      renderItemsList();
+    });
+
+    document.getElementById('filter-currency').addEventListener('change', (e) => {
+      appState.filterCurrency = e.target.value;
+      renderItemsList();
+    });
+
+    document.getElementById('filter-sort').addEventListener('change', (e) => {
+      appState.sortBy = e.target.value;
+      renderItemsList();
+    });
+
+    // 模式切換按鈕
+    const btnGrid = document.getElementById('view-mode-grid');
+    const btnList = document.getElementById('view-mode-list');
+
+    btnGrid.addEventListener('click', () => {
+      appState.viewMode = 'grid';
+      btnGrid.className = 'px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-sakura-600 shadow-sm';
+      btnList.className = 'px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-choc/70 hover:text-choc';
+      renderItemsList();
+    });
+
+    btnList.addEventListener('click', () => {
+      appState.viewMode = 'list';
+      btnList.className = 'px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-sakura-600 shadow-sm';
+      btnGrid.className = 'px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-choc/70 hover:text-choc';
+      renderItemsList();
+    });
+
+    // 彈窗開啟/關閉綁定
+    document.getElementById('btn-open-add-modal').addEventListener('click', () => openItemModal());
+    document.getElementById('btn-close-modal').addEventListener('click', closeItemModal);
+    document.getElementById('btn-cancel-modal').addEventListener('click', closeItemModal);
+
+    // 匯出彈窗綁定
+    const modalExport = document.getElementById('modal-export');
+    document.getElementById('btn-export-options').addEventListener('click', () => {
+      modalExport.classList.remove('hidden');
+      setTimeout(() => modalExport.classList.remove('opacity-0'), 10);
+    });
+    document.getElementById('btn-close-export').addEventListener('click', () => {
+      modalExport.classList.add('opacity-0');
+      setTimeout(() => modalExport.classList.add('hidden'), 200);
+    });
+    document.getElementById('btn-export-csv').addEventListener('click', exportToCSV);
+    document.getElementById('btn-export-json').addEventListener('click', exportToJSON);
+
+    // 重新載入範例資料
+    document.getElementById('btn-reset-sample').addEventListener('click', () => {
+      appState.items = [...SAMPLE_ITEMS];
+      saveItemsToStorage();
+      renderApp();
+      modalExport.classList.add('hidden');
+      showToast('已復原為可愛範例資料！🎁', '🌸');
+    });
+
+    // 點擊背景關閉 Lightbox
+    modalLightbox.addEventListener('click', (e) => {
+      if (e.target === modalLightbox) {
+        modalLightbox.classList.add('opacity-0');
+        setTimeout(() => modalLightbox.classList.add('hidden'), 200);
+      }
+    });
+
+    // 視窗初始化
+    window.addEventListener('DOMContentLoaded', () => {
+      initData();
+      renderApp();
+    });
+  </script>
+</body>
+</html>
