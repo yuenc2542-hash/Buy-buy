@@ -2,8 +2,16 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#FFF5F7">
   <title>🌸 國外旅遊戰利品記帳本 | Pastel Travel Loot Tracker</title>
+  
+  <!-- 手機主畫面 App 圖示與瀏覽器分頁 Favicon (可愛粉嫩購物包圖示) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23FFE2E8'/><text y='70' x='50' font-size='60' text-anchor='middle'>🛍️</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='28' fill='%23FFE2E8'/><text y='70' x='50' font-size='60' text-anchor='middle'>🛍️</text></svg>">
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
@@ -76,6 +84,7 @@
       background-size: 32px 32px;
       background-position: 0 0, 16px 16px;
       color: #5C4A47;
+      -webkit-tap-highlight-color: transparent;
     }
     
     /* Washi tape visual decoration */
@@ -126,16 +135,16 @@
 
   <!-- 頂部可愛導航 -->
   <header class="sticky top-0 z-30 bg-white/85 backdrop-blur-md border-b-2 border-sakura-100 shadow-sm transition-all duration-300">
-    <div class="max-w-6xl mx-auto px-4 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-3">
+    <div class="max-w-6xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between gap-2 sm:gap-3">
       
       <!-- Logo 標題 -->
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2.5 sm:gap-3">
         <div class="w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-tr from-sakura-300 to-sakura-100 rounded-2xl flex items-center justify-center text-xl sm:text-2xl shadow-md border-2 border-white transform hover:rotate-6 transition-transform">
           🛍️
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h1 class="text-xl sm:text-2xl font-black text-choc tracking-tight flex items-center gap-1.5">
+            <h1 class="text-lg sm:text-2xl font-black text-choc tracking-tight flex items-center gap-1.5">
               戰利品手帳
               <span class="text-xs bg-sakura-100 text-sakura-500 font-bold px-2 py-0.5 rounded-full border border-sakura-200">
                 ✈️ 國外記帳
@@ -148,12 +157,19 @@
 
       <!-- 右側動作按鈕區 -->
       <div class="flex items-center gap-2 sm:gap-3">
-        <button id="btn-export-options" class="px-3.5 py-2 bg-cream hover:bg-sakura-50 text-choc text-xs sm:text-sm font-bold rounded-2xl border-2 border-sakura-100 shadow-sm hover:border-sakura-200 transition-all flex items-center gap-1.5">
+        <button id="btn-export-options" class="px-3 py-2 bg-cream hover:bg-sakura-50 text-choc text-xs sm:text-sm font-bold rounded-2xl border-2 border-sakura-100 shadow-sm hover:border-sakura-200 transition-all flex items-center gap-1.5 active:scale-95">
           <i class="fa-solid fa-cloud-arrow-down text-sakura-400"></i>
           <span>備份/匯出</span>
         </button>
 
-        <button id="btn-open-add-modal" class="px-4 py-2 sm:px-5 sm:py-2.5 bg-gradient-to-r from-sakura-400 to-sakura-500 hover:from-sakura-500 hover:to-sakura-600 text-white text-xs sm:text-sm font-bold rounded-2xl shadow-bubble active:shadow-bubble-pressed active:translate-y-1 transition-all flex items-center gap-2">
+        <!-- 📸 拍明細 AI 自動翻譯按鈕 -->
+        <button id="btn-open-ocr-modal" class="px-3 sm:px-4 py-2 bg-sakura-100 hover:bg-sakura-200 text-sakura-600 text-xs sm:text-sm font-bold rounded-2xl border-2 border-sakura-200 shadow-sm hover:border-sakura-300 transition-all flex items-center gap-1.5 active:scale-95 group">
+          <i class="fa-solid fa-receipt text-sakura-500 group-hover:rotate-6 transition-transform"></i>
+          <span>拍明細翻譯</span>
+          <span class="text-[10px] bg-sakura-200/90 text-sakura-700 px-1.5 py-0.2 rounded-full font-black hidden sm:inline-block">AI</span>
+        </button>
+
+        <button id="btn-open-add-modal" class="px-3.5 py-2 sm:px-5 sm:py-2.5 bg-gradient-to-r from-sakura-400 to-sakura-500 hover:from-sakura-500 hover:to-sakura-600 text-white text-xs sm:text-sm font-bold rounded-2xl shadow-bubble active:shadow-bubble-pressed active:translate-y-1 transition-all flex items-center gap-1.5 sm:gap-2">
           <i class="fa-solid fa-plus-circle text-base"></i>
           <span>新增戰利品</span>
         </button>
@@ -361,6 +377,124 @@
 
   </main>
 
+  <!-- 📸 外幣明細發票 AI 拍照翻譯 Modal -->
+  <div id="modal-ocr" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-choc/40 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200">
+    <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl border-4 border-sakura-200 overflow-hidden transform scale-95 transition-transform duration-200 flex flex-col max-h-[92vh]">
+      
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-sakura-200 via-sakura-100 to-cream px-5 sm:px-6 py-4 flex items-center justify-between border-b border-sakura-200">
+        <div class="flex items-center gap-2.5">
+          <span class="text-2xl">🧾</span>
+          <div>
+            <h3 class="text-base sm:text-lg font-black text-choc flex items-center gap-2">
+              出國發票明細 AI 拍照翻譯
+              <span class="text-[11px] bg-sakura-200 text-sakura-600 font-bold px-2 py-0.5 rounded-full border border-sakura-300">
+                ✨ 智慧解讀
+              </span>
+            </h3>
+            <p class="text-xs text-choc/60 font-medium">看不懂日韓歐美收據？拍下發票，AI 自動翻譯品名並折算台幣</p>
+          </div>
+        </div>
+        <button id="btn-close-ocr" class="w-8 h-8 rounded-full bg-white/80 hover:bg-white text-choc/70 hover:text-choc flex items-center justify-center transition-all shadow-sm">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-4 sm:p-6 overflow-y-auto space-y-4 flex-1 text-xs sm:text-sm">
+        
+        <!-- 上傳/拍照區 -->
+        <div id="ocr-upload-area" class="border-2 border-dashed border-sakura-300 bg-sakura-50/50 hover:bg-sakura-100/40 rounded-3xl p-6 text-center transition-colors relative cursor-pointer group">
+          <input type="file" id="ocr-file-input" accept="image/*" capture="environment" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10">
+          <div class="space-y-2">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-sakura-200 flex items-center justify-center text-2xl text-sakura-500 group-hover:scale-110 transition-transform shadow-inner">
+              📸
+            </div>
+            <h4 class="font-black text-sm text-choc">拍照或從相簿選擇收據明細</h4>
+            <p class="text-xs text-choc/60">支援日文、韓文、英文、法文、泰文等各國發票與收據</p>
+            <span class="inline-block text-[11px] text-sakura-600 bg-sakura-100 font-bold px-3 py-1 rounded-xl border border-sakura-200">
+              💡 建議將整張發票平放、在光線充足處拍攝最清楚哦！
+            </span>
+          </div>
+        </div>
+
+        <!-- AI 辨識中動畫提示 -->
+        <div id="ocr-loading" class="hidden text-center py-10 space-y-3 bg-sakura-50/40 rounded-3xl border border-sakura-200">
+          <div class="text-5xl animate-bounce">🌸</div>
+          <h4 class="text-sm font-black text-choc">AI 翻譯小幫手正在細心辨識發票明細中...</h4>
+          <p class="text-xs text-choc/60">正在逐行讀取品項、翻譯繁體中文並換算匯率，請稍候片刻 ✨</p>
+          <div class="w-48 h-2 bg-sakura-200 rounded-full mx-auto overflow-hidden">
+            <div class="w-full h-full bg-sakura-400 animate-pulse"></div>
+          </div>
+        </div>
+
+        <!-- 辨識結果顯示區 -->
+        <div id="ocr-result-container" class="hidden space-y-4">
+          
+          <!-- 發票來源資訊卡片 -->
+          <div class="bg-sakura-50/80 p-3.5 rounded-2xl border border-sakura-200 flex flex-wrap items-center justify-between gap-2.5">
+            <div class="flex items-center gap-2">
+              <span class="text-lg">🏪</span>
+              <div>
+                <span class="text-[10px] text-choc/60 font-bold block">偵測店名</span>
+                <input type="text" id="ocr-store-name" class="font-black text-xs sm:text-sm text-choc bg-transparent border-b border-sakura-300 focus:outline-none" value="">
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div>
+                <span class="text-[10px] text-choc/60 font-bold block">發票日期</span>
+                <input type="date" id="ocr-date" class="font-bold text-xs text-choc bg-white px-2 py-1 rounded-lg border border-sakura-200 focus:outline-none">
+              </div>
+              <div>
+                <span class="text-[10px] text-choc/60 font-bold block">識別幣別</span>
+                <select id="ocr-currency" class="font-bold text-xs text-choc bg-white px-2 py-1 rounded-lg border border-sakura-200 focus:outline-none">
+                  <option value="JPY">JPY 日幣 (¥)</option>
+                  <option value="KRW">KRW 韓元 (₩)</option>
+                  <option value="USD">USD 美元 ($)</option>
+                  <option value="EUR">EUR 歐元 (€)</option>
+                  <option value="THB">THB 泰銖 (฿)</option>
+                  <option value="CUSTOM">自訂幣別</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 項目批次選擇標頭 -->
+          <div class="flex items-center justify-between text-xs px-1">
+            <div class="flex items-center gap-2">
+              <label class="flex items-center gap-1.5 font-black text-choc cursor-pointer">
+                <input type="checkbox" id="ocr-select-all" checked class="w-4 h-4 rounded text-sakura-500 focus:ring-sakura-300">
+                <span>全選所有品項</span>
+              </label>
+              <span class="text-choc/60" id="ocr-selected-count">(已勾選 0 項)</span>
+            </div>
+            <span class="text-[11px] text-choc/50">可自由勾選想記帳的商品或修改名稱</span>
+          </div>
+
+          <!-- 辨識出的品項清單 -->
+          <div id="ocr-items-list" class="space-y-2.5 max-h-72 overflow-y-auto pr-1">
+            <!-- 由 JS 動態產生項目 -->
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- 底部動作鈕 -->
+      <div id="ocr-footer-actions" class="hidden bg-sakura-50/60 px-5 sm:px-6 py-3.5 border-t border-sakura-200 flex items-center justify-between gap-3">
+        <button type="button" id="btn-ocr-reupload" class="px-3.5 py-2 text-choc/70 hover:text-choc text-xs font-bold flex items-center gap-1.5">
+          <i class="fa-solid fa-camera-rotate"></i> 重新拍攝
+        </button>
+
+        <button type="button" id="btn-import-ocr-items" class="px-5 py-2.5 bg-gradient-to-r from-sakura-400 to-sakura-500 hover:from-sakura-500 hover:to-sakura-600 text-white font-bold rounded-2xl shadow-bubble active:translate-y-1 transition-all text-xs sm:text-sm flex items-center gap-2">
+          <i class="fa-solid fa-heart"></i>
+          <span>將選取的商品加入戰利品清單</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- 新增 / 編輯消費紀錄 彈窗 Modal -->
   <div id="modal-item" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-choc/40 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200">
     <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl border-4 border-sakura-100 overflow-hidden transform scale-95 transition-transform duration-200 flex flex-col max-h-[92vh]">
@@ -527,7 +661,7 @@
     </div>
   </div>
 
-  <!-- 可愛自訂確認刪除視窗 (取代原生 confirm) -->
+  <!-- 可愛自訂確認刪除視窗 -->
   <div id="modal-confirm" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-choc/30 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200">
     <div class="bg-white max-w-xs sm:max-w-sm w-full p-6 rounded-3xl shadow-2xl border-4 border-sakura-100 text-center space-y-4">
       <div class="text-4xl">🥺</div>
@@ -596,7 +730,7 @@
     </div>
   </div>
 
-  <!-- 可愛 Toast 通知提示 (取代原生 alert) -->
+  <!-- 可愛 Toast 通知提示 -->
   <div id="toast" class="fixed bottom-6 right-6 z-50 bg-white/95 px-5 py-3 rounded-2xl border-2 border-sakura-300 shadow-soft transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-2.5 text-xs sm:text-sm font-bold text-choc">
     <span id="toast-icon" class="text-lg">✨</span>
     <span id="toast-msg">操作成功！</span>
@@ -723,9 +857,7 @@
     const STORAGE_KEY_RATES = 'kawaii_loot_rates_v2';
     const STORAGE_KEY_ACTIVE_CURR = 'kawaii_loot_active_curr_v2';
 
-    /**
-     * 智慧壓縮上傳的圖片為合理大小之 Data URL，避免突破 localStorage 5MB 限制
-     */
+    // 智慧壓縮上傳的圖片為合理大小之 Data URL，避免突破 localStorage 限制
     function compressImage(file, maxWidth = 500, quality = 0.75) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -755,6 +887,11 @@
         };
         reader.onerror = (err) => reject(err);
       });
+    }
+
+    // 發票高解析度壓縮（保留細小文字以便 OCR 辨識）
+    function compressReceiptForOcr(file) {
+      return compressImage(file, 1200, 0.82);
     }
 
     // Toast 提示工具
@@ -1330,7 +1467,7 @@
       }
     };
 
-    // 刪除確認 Modal 邏輯 (取代原生 confirm)
+    // 刪除確認 Modal 邏輯
     const modalConfirm = document.getElementById('modal-confirm');
     window.promptDeleteItem = function(id) {
       appState.deleteTargetId = id;
@@ -1542,6 +1679,346 @@
       if (e.target === modalLightbox) {
         modalLightbox.classList.add('opacity-0');
         setTimeout(() => modalLightbox.classList.add('hidden'), 200);
+      }
+    });
+
+    // ----------------------------------------------------
+    // 🧾 AI 拍照明細自動翻譯與快速記帳邏輯
+    // ----------------------------------------------------
+    const modalOcr = document.getElementById('modal-ocr');
+    const btnOpenOcr = document.getElementById('btn-open-ocr-modal');
+    const btnCloseOcr = document.getElementById('btn-close-ocr');
+    const ocrFileInput = document.getElementById('ocr-file-input');
+    const ocrUploadArea = document.getElementById('ocr-upload-area');
+    const ocrLoading = document.getElementById('ocr-loading');
+    const ocrResultContainer = document.getElementById('ocr-result-container');
+    const ocrFooterActions = document.getElementById('ocr-footer-actions');
+    const ocrItemsList = document.getElementById('ocr-items-list');
+    const ocrSelectAll = document.getElementById('ocr-select-all');
+    const btnImportOcr = document.getElementById('btn-import-ocr-items');
+    const btnOcrReupload = document.getElementById('btn-ocr-reupload');
+
+    let parsedReceiptData = null;
+    let receiptOriginalImage = '';
+
+    function openOcrModal() {
+      resetOcrState();
+      modalOcr.classList.remove('hidden');
+      setTimeout(() => {
+        modalOcr.classList.remove('opacity-0');
+        modalOcr.querySelector('div').classList.remove('scale-95');
+      }, 10);
+    }
+
+    function closeOcrModal() {
+      modalOcr.classList.add('opacity-0');
+      modalOcr.querySelector('div').classList.add('scale-95');
+      setTimeout(() => {
+        modalOcr.classList.add('hidden');
+      }, 200);
+    }
+
+    function resetOcrState() {
+      ocrUploadArea.classList.remove('hidden');
+      ocrLoading.classList.add('hidden');
+      ocrResultContainer.classList.add('hidden');
+      ocrFooterActions.classList.add('hidden');
+      ocrFileInput.value = '';
+      ocrItemsList.innerHTML = '';
+      parsedReceiptData = null;
+      receiptOriginalImage = '';
+    }
+
+    btnOpenOcr.addEventListener('click', openOcrModal);
+    btnCloseOcr.addEventListener('click', closeOcrModal);
+    btnOcrReupload.addEventListener('click', resetOcrState);
+
+    // 發票照片上傳與呼叫 Gemini API
+    ocrFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      try {
+        ocrUploadArea.classList.add('hidden');
+        ocrLoading.classList.remove('hidden');
+
+        // 壓縮取得 Base64
+        const compressedBase64 = await compressReceiptForOcr(file);
+        receiptOriginalImage = compressedBase64;
+        const pureBase64 = compressedBase64.replace(/^data:image\/(png|jpeg|jpg);base64,/, '');
+
+        // 呼叫 Gemini 進行發票 OCR 與翻譯
+        const receiptData = await analyzeReceiptWithGemini(pureBase64);
+        parsedReceiptData = receiptData;
+
+        // 渲染辨識結果
+        renderOcrResults(receiptData);
+
+        ocrLoading.classList.add('hidden');
+        ocrResultContainer.classList.remove('hidden');
+        ocrFooterActions.classList.remove('hidden');
+        showToast('發票明細翻譯完成！請勾選欲收錄的商品 ✨', '🧾');
+      } catch (err) {
+        console.error(err);
+        ocrLoading.classList.add('hidden');
+        ocrUploadArea.classList.remove('hidden');
+        showToast('發票辨識失敗，請確保光線明亮並重新拍攝！🥺', '⚠️');
+      }
+    });
+
+    // 呼叫 Gemini API 進行發票解讀
+    async function analyzeReceiptWithGemini(base64ImageData) {
+      const apiKey = "";
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+
+      const prompt = `
+        You are a helpful travel assistant and accountant.
+        Analyze this overseas receipt/invoice carefully:
+        1. Identify the merchant/store name.
+        2. Identify the purchase date (format: YYYY-MM-DD; if not found, use today's date).
+        3. Identify the currency (e.g., JPY, KRW, USD, EUR, THB).
+        4. Extract each purchased item:
+           - originalName: original text on the receipt
+           - translatedName: accurate Traditional Chinese (繁體中文) translation of the item so the tourist can understand exactly what it is (e.g. '合利他命 EX Plus 270錠', '卡樂比加勒比薯條', 'DHC 護唇膏')
+           - foreignPrice: the single item or row price (number, remove currency symbol or commas). Do NOT include tax subtotal or discount rows as an item.
+           - category: one of 'beauty', 'fashion', 'snacks', 'anime', 'digital', 'other'
+      `;
+
+      const payload = {
+        contents: [
+          {
+            role: "user",
+            parts: [
+              { text: prompt },
+              {
+                inlineData: {
+                  mimeType: "image/jpeg",
+                  data: base64ImageData
+                }
+              }
+            ]
+          }
+        ],
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: "OBJECT",
+            properties: {
+              storeName: { type: "STRING" },
+              date: { type: "STRING" },
+              currency: { type: "STRING" },
+              items: {
+                type: "ARRAY",
+                items: {
+                  type: "OBJECT",
+                  properties: {
+                    originalName: { type: "STRING" },
+                    translatedName: { type: "STRING" },
+                    foreignPrice: { type: "NUMBER" },
+                    category: {
+                      type: "STRING",
+                      enum: ["beauty", "fashion", "snacks", "anime", "digital", "other"]
+                    }
+                  },
+                  "propertyOrdering": ["originalName", "translatedName", "foreignPrice", "category"]
+                }
+              }
+            },
+            "propertyOrdering": ["storeName", "date", "currency", "items"]
+          }
+        }
+      };
+
+      // 指數退避重試
+      let retries = 0;
+      const maxRetries = 3;
+      let delay = 1000;
+
+      while (retries < maxRetries) {
+        try {
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (response.status === 429 || response.status >= 500) {
+            await new Promise(r => setTimeout(r, delay));
+            delay *= 2;
+            retries++;
+            continue;
+          }
+
+          const result = await response.json();
+          const jsonText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (jsonText) {
+            return JSON.parse(jsonText);
+          } else {
+            throw new Error('No candidate content received from model');
+          }
+        } catch (e) {
+          if (retries === maxRetries - 1) throw e;
+          await new Promise(r => setTimeout(r, delay));
+          delay *= 2;
+          retries++;
+        }
+      }
+      throw new Error('API call failed after retries');
+    }
+
+    // 渲染 OCR 辨識結果與勾選列表
+    function renderOcrResults(data) {
+      document.getElementById('ocr-store-name').value = data.storeName || '海外門市';
+      document.getElementById('ocr-date').value = data.date || new Date().toISOString().split('T')[0];
+      
+      const currencySelect = document.getElementById('ocr-currency');
+      if (data.currency && DEFAULT_CURRENCIES[data.currency.toUpperCase()]) {
+        currencySelect.value = data.currency.toUpperCase();
+      } else {
+        currencySelect.value = appState.currentCurrency;
+      }
+
+      ocrItemsList.innerHTML = '';
+      const items = data.items || [];
+
+      if (items.length === 0) {
+        ocrItemsList.innerHTML = `
+          <div class="text-center py-6 text-choc/60 bg-sakura-50/50 rounded-2xl border border-dashed border-sakura-200">
+            未能識別出具體品項，請嘗試拍攝更清晰的收據內文！
+          </div>
+        `;
+        return;
+      }
+
+      const activeRate = appState.rates[currencySelect.value] || 1;
+
+      items.forEach((item, index) => {
+        const itemRow = document.createElement('div');
+        itemRow.className = 'bg-sakura-50/70 hover:bg-sakura-100/60 p-3 rounded-2xl border border-sakura-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 transition-colors';
+        
+        const estTwd = Math.round((Number(item.foreignPrice) || 0) * activeRate);
+
+        itemRow.innerHTML = `
+          <div class="flex items-start gap-2.5 flex-1 min-w-0">
+            <input type="checkbox" class="ocr-item-check mt-1 w-4 h-4 rounded text-sakura-500 focus:ring-sakura-300 cursor-pointer" data-index="${index}" checked>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <input type="text" class="ocr-item-name font-black text-choc bg-transparent border-b border-transparent hover:border-sakura-300 focus:border-sakura-500 focus:outline-none text-xs sm:text-sm w-full sm:w-auto" value="${item.translatedName || item.originalName}">
+                <select class="ocr-item-category text-[11px] font-bold px-2 py-0.5 rounded-lg border border-sakura-200 bg-white text-choc focus:outline-none">
+                  <option value="beauty" ${item.category === 'beauty' ? 'selected' : ''}>💄 藥妝彩妝</option>
+                  <option value="fashion" ${item.category === 'fashion' ? 'selected' : ''}>👗 服飾配件</option>
+                  <option value="snacks" ${item.category === 'snacks' ? 'selected' : ''}>🍵 零食伴手禮</option>
+                  <option value="anime" ${item.category === 'anime' ? 'selected' : ''}>🧸 動漫周邊</option>
+                  <option value="digital" ${item.category === 'digital' ? 'selected' : ''}>📷 電器3C</option>
+                  <option value="other" ${item.category === 'other' ? 'selected' : ''}>🎀 其他雜貨</option>
+                </select>
+              </div>
+              <p class="text-[11px] text-choc/55 truncate mt-0.5">原文字樣：${item.originalName || '無'}</p>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-end gap-3 w-full sm:w-auto text-right pl-6 sm:pl-0">
+            <div>
+              <span class="text-[10px] text-choc/50 font-bold block">原幣售價</span>
+              <input type="number" step="0.01" class="ocr-item-price font-bold text-xs text-choc w-16 text-right bg-white rounded border border-sakura-200 px-1 py-0.5" value="${item.foreignPrice || 0}">
+            </div>
+            <div class="min-w-[70px]">
+              <span class="text-[10px] text-sakura-500 font-bold block">折合台幣</span>
+              <span class="ocr-item-twd font-black text-xs sm:text-sm text-sakura-500">NT$ ${estTwd.toLocaleString()}</span>
+            </div>
+          </div>
+        `;
+
+        // 綁定價格更動即時重算台幣
+        const priceInput = itemRow.querySelector('.ocr-item-price');
+        const twdDisplay = itemRow.querySelector('.ocr-item-twd');
+        priceInput.addEventListener('input', () => {
+          const newPrice = parseFloat(priceInput.value) || 0;
+          const curr = currencySelect.value;
+          const rate = appState.rates[curr] || 1;
+          twdDisplay.textContent = `NT$ ${Math.round(newPrice * rate).toLocaleString()}`;
+        });
+
+        ocrItemsList.appendChild(itemRow);
+      });
+
+      updateOcrSelectedCount();
+    }
+
+    // 更新勾選數量
+    function updateOcrSelectedCount() {
+      const checkboxes = document.querySelectorAll('.ocr-item-check');
+      const checkedBoxes = document.querySelectorAll('.ocr-item-check:checked');
+      document.getElementById('ocr-selected-count').textContent = `(已勾選 ${checkedBoxes.length} / ${checkboxes.length} 項)`;
+    }
+
+    ocrItemsList.addEventListener('change', (e) => {
+      if (e.target.classList.contains('ocr-item-check')) {
+        updateOcrSelectedCount();
+      }
+    });
+
+    ocrSelectAll.addEventListener('change', (e) => {
+      const isChecked = e.target.checked;
+      document.querySelectorAll('.ocr-item-check').forEach(cb => cb.checked = isChecked);
+      updateOcrSelectedCount();
+    });
+
+    // 幣別變更時連動更新每項的折合台幣
+    document.getElementById('ocr-currency').addEventListener('change', (e) => {
+      const newCurr = e.target.value;
+      const rate = appState.rates[newCurr] || 1;
+      document.querySelectorAll('#ocr-items-list > div').forEach(row => {
+        const price = parseFloat(row.querySelector('.ocr-item-price').value) || 0;
+        row.querySelector('.ocr-item-twd').textContent = `NT$ ${Math.round(price * rate).toLocaleString()}`;
+      });
+    });
+
+    // 批次匯入選中的戰利品到記帳本中
+    btnImportOcr.addEventListener('click', () => {
+      const storeName = document.getElementById('ocr-store-name').value.trim() || '國外商店';
+      const receiptDate = document.getElementById('ocr-date').value || new Date().toISOString().split('T')[0];
+      const selectedCurrency = document.getElementById('ocr-currency').value;
+      const rate = appState.rates[selectedCurrency] || 1;
+
+      const rows = document.querySelectorAll('#ocr-items-list > div');
+      let importedCount = 0;
+
+      rows.forEach(row => {
+        const isChecked = row.querySelector('.ocr-item-check').checked;
+        if (!isChecked) return;
+
+        const name = row.querySelector('.ocr-item-name').value.trim();
+        const category = row.querySelector('.ocr-item-category').value;
+        const foreignPrice = parseFloat(row.querySelector('.ocr-item-price').value) || 0;
+        const twdPrice = Math.round(foreignPrice * rate);
+
+        if (name) {
+          const newItem = {
+            id: 'loot-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
+            name: name,
+            category: category,
+            date: receiptDate,
+            currency: selectedCurrency,
+            foreignPrice: foreignPrice,
+            twdPrice: twdPrice,
+            location: storeName,
+            payment: 'credit',
+            note: '🧾 來自發票智慧辨識匯入',
+            image: receiptOriginalImage // 將明細相片作為備份關聯
+          };
+          appState.items.unshift(newItem);
+          importedCount++;
+        }
+      });
+
+      if (importedCount > 0) {
+        saveItemsToStorage();
+        closeOcrModal();
+        renderApp();
+        showToast(`已成功將 ${importedCount} 件明細商品加入記帳本！🎉`, '🛍️');
+      } else {
+        showToast('請至少勾選一項要加入的商品唷！', '⚠️');
       }
     });
 
