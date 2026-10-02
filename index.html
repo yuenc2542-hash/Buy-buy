@@ -144,12 +144,12 @@
 <body class="min-h-screen text-choc selection:bg-sakura-200 selection:text-sakura-600">
 
   <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b-2 border-sakura-100 shadow-sm transition-all duration-300">
-    <div class="max-w-6xl mx-auto px-3.5 sm:px-4 py-2.5 sm:py-3.5 flex items-center justify-between gap-2">
+    <div class="max-w-6xl mx-auto px-2.5 sm:px-4 py-2 sm:py-3.5 flex items-center justify-between gap-1 sm:gap-2">
       
       <!-- 可愛狗腳掌 Logo 與新標題 -->
-      <div class="flex items-center gap-2 sm:gap-3">
+      <div class="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
         <!-- 🐾 可愛狗腳掌圖章 -->
-        <div class="w-11 h-11 sm:w-12 sm:h-12 bg-sakura-100 rounded-2xl flex items-center justify-center p-1.5 shadow-sm border-2 border-white transform hover:rotate-6 transition-transform overflow-hidden flex-shrink-0">
+        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-sakura-100 rounded-2xl flex items-center justify-center p-1.5 shadow-sm border-2 border-white transform hover:rotate-6 transition-transform overflow-hidden flex-shrink-0">
           <svg class="w-full h-full" viewBox="0 0 100 100">
             <ellipse cx="27" cy="42" rx="6.5" ry="9" transform="rotate(-26 27 42)" fill="#5C4A47"/>
             <ellipse cx="42" cy="31" rx="7" ry="10" transform="rotate(-8 42 31)" fill="#5C4A47"/>
@@ -161,43 +161,39 @@
         </div>
 
         <div>
-          <div class="flex items-center gap-1.5">
-            <h1 class="text-base sm:text-xl font-black text-choc tracking-tight flex items-center gap-1">
-              戰利品手帳
-              <span class="text-[11px] sm:text-xs bg-sakura-100 text-sakura-600 font-bold px-1.5 sm:px-2 py-0.5 rounded-full border border-sakura-200">
-                🍀 國外消費
+          <div class="flex items-center gap-1 sm:gap-1.5">
+            <h1 class="text-sm sm:text-xl font-black text-choc tracking-tight flex items-center gap-1 whitespace-nowrap">
+              <span>戰利品手帳</span>
+              <!-- 🍀 幸運草框框：已完全刪除「國外消費」等文字，只保留單純可愛的幸運草小圓鈕 -->
+              <span class="inline-flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 bg-sakura-100 rounded-full border border-sakura-200 text-xs sm:text-sm flex-shrink-0" title="幸運草">
+                🍀
               </span>
             </h1>
           </div>
-          <p class="text-[11px] sm:text-xs text-choc/65 font-medium hidden sm:block">紀錄旅途中的心動戰利品與可愛回憶 ✨</p>
+          <p class="text-[11px] sm:text-xs text-choc/65 font-medium hidden sm:block whitespace-nowrap">紀錄旅途中的心動戰利品與可愛回憶 ✨</p>
         </div>
       </div>
 
-      <!-- 右側動作按鈕區 -->
-      <div class="flex items-center gap-1.5 sm:gap-2">
-        <!-- 備份與匯出 -->
-        <button id="btn-export-options" class="min-h-[38px] sm:min-h-[42px] px-2.5 sm:px-3 py-1.5 sm:py-2 bg-cream hover:bg-sakura-50 text-choc text-xs sm:text-sm font-bold rounded-2xl border-2 border-sakura-100 shadow-sm transition-all flex items-center gap-1 active:scale-95">
-          <i class="fa-solid fa-cloud-arrow-down text-sakura-400"></i>
-          <span class="hidden xs:inline">備份</span>
+      <!-- 右側動作按鈕區：四個框框皆已刪除所有文字，統一改為乾淨可愛的純圖示按鈕 -->
+      <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+        <!-- 1️⃣ 備份框框（純圖示） -->
+        <button id="btn-export-options" class="w-9 h-9 sm:w-10 sm:h-10 bg-cream hover:bg-sakura-50 text-choc rounded-2xl border-2 border-sakura-100 shadow-sm transition-all flex items-center justify-center active:scale-95 flex-shrink-0" title="備份與匯出">
+          <i class="fa-solid fa-cloud-arrow-down text-sakura-400 text-sm sm:text-base"></i>
         </button>
 
-        <!-- 🎨 自訂分類管理按鈕 -->
-        <button id="btn-open-category-manager" class="min-h-[38px] sm:min-h-[42px] px-2.5 sm:px-3 py-1.5 sm:py-2 bg-lavender-100 hover:bg-lavender-200 text-lavender-700 text-xs sm:text-sm font-bold rounded-2xl border-2 border-lavender-200 shadow-sm transition-all flex items-center gap-1 active:scale-95" title="自訂商品分類">
-          <i class="fa-solid fa-tags text-lavender-500"></i>
-          <span class="hidden sm:inline">分類</span>
+        <!-- 2️⃣ 分類框框（純圖示） -->
+        <button id="btn-open-category-manager" class="w-9 h-9 sm:w-10 sm:h-10 bg-lavender-100 hover:bg-lavender-200 text-lavender-700 rounded-2xl border-2 border-lavender-200 shadow-sm transition-all flex items-center justify-center active:scale-95 flex-shrink-0" title="自訂商品分類管理">
+          <i class="fa-solid fa-tags text-lavender-500 text-sm sm:text-base"></i>
         </button>
 
-        <!-- 📸 拍明細 AI 自動翻譯按鈕 -->
-        <button id="btn-open-ocr-modal" class="min-h-[38px] sm:min-h-[42px] px-2.5 sm:px-3 py-1.5 sm:py-2 bg-sakura-100 hover:bg-sakura-200 text-sakura-600 text-xs sm:text-sm font-bold rounded-2xl border-2 border-sakura-200 shadow-sm transition-all flex items-center gap-1 active:scale-95 group">
-          <i class="fa-solid fa-receipt text-sakura-500"></i>
-          <span>拍明細</span>
-          <span class="text-[9px] bg-sakura-200 text-sakura-700 px-1 py-0.2 rounded-full font-black">AI</span>
+        <!-- 3️⃣ 拍明細框框（純圖示：已刪除「拍明細」與「AI」字樣） -->
+        <button id="btn-open-ocr-modal" class="w-9 h-9 sm:w-10 sm:h-10 bg-sakura-100 hover:bg-sakura-200 text-sakura-600 rounded-2xl border-2 border-sakura-200 shadow-sm transition-all flex items-center justify-center active:scale-95 flex-shrink-0" title="拍發票明細 AI 拍照翻譯">
+          <i class="fa-solid fa-receipt text-sakura-500 text-sm sm:text-base"></i>
         </button>
 
-        <!-- 新增戰利品按鈕 -->
-        <button id="btn-open-add-modal" class="min-h-[38px] sm:min-h-[42px] px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-sakura-400 to-sakura-500 hover:from-sakura-500 hover:to-sakura-600 text-white text-xs sm:text-sm font-bold rounded-2xl shadow-bubble active:shadow-bubble-pressed active:translate-y-1 transition-all flex items-center gap-1.5">
-          <i class="fa-solid fa-plus-circle text-sm sm:text-base"></i>
-          <span>記一筆</span>
+        <!-- 4️⃣ 記一筆框框（純圖示：已刪除「記一筆」字樣，保留可愛粉紅圓角漸層加號） -->
+        <button id="btn-open-add-modal" class="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-r from-sakura-400 to-sakura-500 hover:from-sakura-500 hover:to-sakura-600 text-white rounded-2xl shadow-bubble active:shadow-bubble-pressed active:translate-y-1 transition-all flex items-center justify-center active:scale-95 flex-shrink-0" title="新增記一筆">
+          <i class="fa-solid fa-plus text-sm sm:text-base"></i>
         </button>
       </div>
 
